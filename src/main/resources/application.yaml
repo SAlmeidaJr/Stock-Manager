@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: StockManager
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+    password: secret
+    driver-class-name:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
