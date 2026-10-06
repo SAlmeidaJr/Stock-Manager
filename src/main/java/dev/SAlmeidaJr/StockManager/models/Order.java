@@ -1,18 +1,19 @@
-package dev.SAlmeidaJr.models;
+package dev.SAlmeidaJr.StockManager.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.annotations.Audited.Table;
-import org.springframework.data.annotation.Id;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,13 +29,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @OneToMany(mappedBy = "order")
-    @JsonBackReference
-    private Stock stock;
+    private List<OrderItem> items = new ArrayList<>() ;
 
-    private int quantity;
+    @OneToOne(mappedBy = "order")
+    private Payment payment;
 }

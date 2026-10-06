@@ -1,10 +1,8 @@
-package dev.SAlmeidaJr.models;
+package dev.SAlmeidaJr.StockManager.models;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,11 +30,12 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(
-        mappedBy = "customer",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true)
-    @JsonManagedReference
+    @Column(nullable = false)
+    private String email;
+
+    private String password;
+
+    @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
 }
