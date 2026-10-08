@@ -34,6 +34,9 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
