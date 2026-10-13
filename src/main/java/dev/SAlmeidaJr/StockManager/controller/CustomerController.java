@@ -1,7 +1,10 @@
 package dev.SAlmeidaJr.StockManager.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +27,28 @@ public class CustomerController {
     }
 
     @PostMapping("/login")
-    ResponseEntity<Customer> login(@RequestBody CustomerDto body){
+    ResponseEntity<Customer> loginAccount(@RequestBody CustomerDto body){
         return customerServices.log(body);
+    }
+
+    @PutMapping
+    ResponseEntity<Customer> updateAccount(@RequestBody CustomerDto body){
+        return customerServices.update(body);
+    }
+
+    @GetMapping("/{email}")
+    Customer getCustomerAccount (@RequestBody String email){
+        return null;
+    }
+
+    @DeleteMapping("/{email}")
+    Customer deleteCustomerAccount(@RequestBody String email){
+        return null;
+    }
+
+    @GetMapping("/teste")
+    String testApi(){
+        return "Teste rodando";
     }
 
 }

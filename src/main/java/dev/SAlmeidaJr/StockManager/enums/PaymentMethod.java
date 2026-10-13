@@ -1,6 +1,6 @@
 package dev.SAlmeidaJr.StockManager.enums;
 
-enum PaymentMethod {
+public enum PaymentMethod {
     CREDIT,
     DEBIT,
     PIX,

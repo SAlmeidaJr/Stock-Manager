@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
-
+import dev.SAlmeidaJr.StockManager.enums.PaymentMethod;
 import dev.SAlmeidaJr.StockManager.enums.PaymentStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,6 +45,4 @@ public class Payment {
     private LocalDateTime createdAt;
 
     private LocalDateTime paidAt;
-
-
 }

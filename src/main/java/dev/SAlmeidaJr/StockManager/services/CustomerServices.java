@@ -20,18 +20,19 @@ public class CustomerServices {
 
 
     public ResponseEntity<Customer> save(CustomerDto body){
-        if(customerRepo.existsByEmail(body.email())){
+        if(!customerRepo.existsByEmail(body.email())){
            throw new RuntimeException("Email already in use");
         }
-        String hash = security.encode(body.password());
-        CustomerDto newBody = new CustomerDto(
+        var hash = security.encode(body.password());
+        var newBody = new CustomerDto(
             body.name(),
             body.email(),
-            hash
+            hash,
+            body.phoneNumber()
         );
 
-        Customer customer = CustomerConverters.toCustomer(newBody);
-        Customer savedCustomer = customerRepo.saveAndFlush(customer);
+        var customer = CustomerConverters.toCustomer(newBody);
+        var savedCustomer = customerRepo.saveAndFlush(customer);
 
         customer.setPassword(null);
         return ResponseEntity.ok(savedCustomer);
@@ -42,7 +43,7 @@ public class CustomerServices {
         if(customerRepo.existsByEmail(body.email())){
             throw new RuntimeException("Email already in use");
         }
-        Customer customerOnDb = customerRepo.findByEmail(body.email());
+        var customerOnDb = customerRepo.findByEmail(body.email());
 
         if(security.matches(body.password(), customerOnDb.getPassword())){
             throw new RuntimeException("Password or Email do not matches");
@@ -50,5 +51,33 @@ public class CustomerServices {
         customerOnDb.setPassword(null);
         return ResponseEntity.ok(customerOnDb);
 
+    }
+
+    public ResponseEntity<Customer> update(CustomerDto body){
+        if(!customerRepo.existsByEmail(body.email())){
+            throw new RuntimeException("Email not found");
+        }
+        var customer = customerRepo.findByEmail(body.email());
+
+        customer.setEmail(body.email());
+        customer.setName(body.name());
+        customer.setPassword(body.password());
+        customer.setPhoneNumber(body.phoneNumber());
+
+        var updatedCustomer = customerRepo.saveAndFlush(customer);
+
+        updatedCustomer.setPassword(null);
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
+
+
+    public ResponseEntity<Customer> getCustomer(String email){
+        return null;
+    }
+
+
+    public ResponseEntity<Customer> deleteCustomer(String email){
+        return null;
     }
 }
