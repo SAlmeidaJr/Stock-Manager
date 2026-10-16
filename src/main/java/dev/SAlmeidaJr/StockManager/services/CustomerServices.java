@@ -72,12 +72,15 @@ public class CustomerServices {
 
 
 
-    public ResponseEntity<Customer> getCustomer(String email){
-        return null;
+    public Customer getCustomer(String email){
+        return customerRepo.findByEmail(email);
     }
 
 
-    public ResponseEntity<Customer> deleteCustomer(String email){
-        return null;
+    public void deleteCustomer(String email){
+        if(!customerRepo.existsByEmail(email)){
+            throw new RuntimeException("Email not found");
+        }
+        customerRepo.deleteByEmail(email);
     }
 }

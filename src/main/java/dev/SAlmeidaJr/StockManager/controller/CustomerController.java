@@ -38,17 +38,12 @@ public class CustomerController {
 
     @GetMapping("/{email}")
     Customer getCustomerAccount (@RequestBody String email){
-        return null;
+        return customerServices.getCustomer(email);
     }
 
     @DeleteMapping("/{email}")
-    Customer deleteCustomerAccount(@RequestBody String email){
-        return null;
-    }
-
-    @GetMapping("/teste")
-    String testApi(){
-        return "Teste rodando";
+    void deleteCustomerAccount(@RequestBody String email){
+        customerServices.deleteCustomer(email);
     }
 
 }

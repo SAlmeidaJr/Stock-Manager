@@ -10,6 +10,6 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID>{
 
     Customer findByEmail(String email);
     boolean existsByEmail(String email);
-
+    void deleteByEmail(String email);
 
 }
