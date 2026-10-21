@@ -17,7 +17,7 @@ class OrderController {
     }
 
     @PostMapping("/")
-    ResponseEntity<Order> setOrder(){
+    ResponseEntity<Order> createOrder(){
         return null;
     }
 

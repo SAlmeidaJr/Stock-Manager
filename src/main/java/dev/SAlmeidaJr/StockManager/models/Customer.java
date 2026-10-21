@@ -19,7 +19,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "customers")
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
