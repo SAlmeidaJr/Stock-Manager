@@ -10,11 +10,10 @@ import org.springframework.stereotype.Service;
 
 import dev.SAlmeidaJr.StockManager.Repositories.OrderRepository;
 import dev.SAlmeidaJr.StockManager.Repositories.ProductRepository;
-import dev.SAlmeidaJr.StockManager.dto.OrderRequest;
-import dev.SAlmeidaJr.StockManager.dto.OrderResponse;
-import dev.SAlmeidaJr.StockManager.models.Order;
+import dev.SAlmeidaJr.StockManager.dto.OrderItemDTO;
+import dev.SAlmeidaJr.StockManager.dto.OrderRequestDTO;
+import dev.SAlmeidaJr.StockManager.dto.OrderResponseDTO;
 import dev.SAlmeidaJr.StockManager.models.OrderItem;
-import dev.SAlmeidaJr.StockManager.models.Product;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -31,7 +30,7 @@ public class OrderServices {
         this.productRepository = productRepository;
     }
 
-    public ResponseEntity<Order> createOrder(OrderRequest body){
+    public ResponseEntity<OrderResponseDTO> createOrder(OrderRequestDTO body){
         var customerId = body.customerId();
 
         var total = BigDecimal.ZERO;
@@ -46,7 +45,7 @@ public class OrderServices {
                 throw new RuntimeException("Estoque de "+product.getName()+" em falta");
             }
 
-            if(product.getQuantity() > item.quantity()){
+            if(product.getQuantity() < item.quantity()){
                 throw new RuntimeException("Quantidade insuficiente de produtos para compra, quantidade restante: "+product.getQuantity());
             }
 
@@ -65,12 +64,20 @@ public class OrderServices {
             total = total.add(subtotal);
         }
 
-        var orderResponse = new OrderResponse(
-            customerId,
-            body.items(),
-            total,
-            payment);
+        List<OrderItemDTO> newItemsList = body.items()
+            .stream()
+            .map(item -> new OrderItemDTO(
+                item.productId(),
+                item.quantity()
+            )).toList();
 
-        return null;
+        var orderResponse = new OrderResponseDTO(
+            customerId,
+            newItemsList,
+            total,
+            "Ok"
+            );
+
+        return ResponseEntity.ok(orderResponse);
     }
 }

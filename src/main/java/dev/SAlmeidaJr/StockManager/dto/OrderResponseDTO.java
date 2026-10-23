@@ -3,13 +3,13 @@ package dev.SAlmeidaJr.StockManager.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import dev.SAlmeidaJr.StockManager.models.Customer;
-import dev.SAlmeidaJr.StockManager.models.Payment;
 
-public record OrderResponse(
-    Customer customer,
-    List<OrderItemDto> items,
+public record OrderResponseDTO(
+    UUID customerId,
+    List<OrderItemDTO> items,
     BigDecimal total,
-    Payment payment
+    String payment
 ){}
