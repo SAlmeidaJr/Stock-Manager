@@ -21,4 +21,6 @@ public class MercadoPagoClient {
         MercadoPagoConfig.setAccessToken(acessToken);
         log.info("iniciando Mercado Pago");
     }
+
+
 }
